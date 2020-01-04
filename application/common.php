@@ -10,3 +10,22 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+function pagination($obj){
+    if(!$obj){
+        return '';
+    }
+    $params = request()->param();
+    return '<div class="imooc-app">'.$obj->appends($params)->render().'</div>';
+}
+
+
+/**
+  分类格式化
+ **/
+function getCatName($catId){
+    if(!$catId){
+        return null;
+    }
+    $cats = config('cat.lists');
+    
+}
