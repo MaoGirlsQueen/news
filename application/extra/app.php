@@ -6,5 +6,6 @@ return [
         'ios',
         'android'
     ],
-    'app_sign_time'=>1000//sign的过期时间
+    'app_sign_time'=>1000,//sign的过期时间，
+    'app_sign_cache_time'=>1500
 ];

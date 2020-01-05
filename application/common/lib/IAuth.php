@@ -5,6 +5,8 @@ namespace app\common\lib;
 
 
 use app\common\lib\Aes;
+use think\Cache;
+
 class IAuth
 {
     /***
@@ -49,6 +51,9 @@ class IAuth
              return false;
          }
          if(($data['time'] - (ceil($arr['time']))/1000)>config('app.app_sign_time')){
+             return false;
+         }
+         if(Cache::get($data['sign'])){
              return false;
          }
          return true;

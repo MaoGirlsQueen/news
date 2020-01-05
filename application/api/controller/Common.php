@@ -9,6 +9,7 @@ namespace app\api\controller;
 
 use app\common\lib\exception\ApiException;
 use app\common\lib\Time;
+use think\Cache;
 use think\Controller;
 use app\common\lib\IAuth;
 class Common extends Controller
@@ -41,6 +42,7 @@ class Common extends Controller
         if(!$pass){
             throw new ApiException("授权码失败",401);
         }
+        Cache::set($header['sign'],1,config('app.app_sign_cache_time'));
         $this->header = $header;
 
     }
