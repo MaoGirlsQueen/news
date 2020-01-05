@@ -40,6 +40,14 @@ function getPosition($id){
 /**
 发布状态格式化
  **/
-function getStatus($status){
-    return $status ? '已发布':'未发布';
+function getStatus($id,$status){
+    $model = request()->controller();
+    $sta = $status == 1? 0:1;
+    $url = url($model.'/status',['id'=>$id,'status'=>$sta]);
+    if($status == 1){
+        $str = "<a href='javascript:;' title='修改状态' status-url='".$url."' onclick='app_status(this)'><span class='label label-success radius'>正常</span></a>";
+    }else if($status == 0){
+        $str = "<a href='javascript:;' title='修改状态' status-url='".$url."' onclick='app_status(this)'><span class='label label-danger'>待审</span></a>";
+    }
+    return $str;
 }
