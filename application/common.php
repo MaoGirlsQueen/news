@@ -51,3 +51,15 @@ function getStatus($id,$status){
     }
     return $str;
 }
+
+/***
+  通用化API接口数据输出
+ **/
+function show($status,$message,$data=[],$httpCode=200){
+    $result = [
+        'status'=>$status,
+        'message'=>$message,
+        'data'=>$data,
+    ];
+    return json($result,$httpCode);
+}
