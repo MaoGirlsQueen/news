@@ -27,5 +27,19 @@ function getCatName($catId){
         return null;
     }
     $cats = config('cat.lists');
-    
+    return !empty($cats[$catId]) ? $cats[$catId]:'';
+}
+
+/**
+是否推荐格式化
+ */
+function getPosition($id){
+    return $id ? '<span style="color:red">是</span>':'<span>否</span>';
+}
+
+/**
+发布状态格式化
+ **/
+function getStatus($status){
+    return $status ? '已发布':'未发布';
 }

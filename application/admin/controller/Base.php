@@ -8,6 +8,9 @@ use think\Controller;
 
 class Base extends Controller
 {
+
+    public $page =0;
+    public $size=0;
     //初始化
    public function _initialize()
    {
@@ -26,5 +29,14 @@ class Base extends Controller
              return true;
          }
         return false;
+    }
+
+    /**
+      获取分页的内容和size
+     **/
+    public function getPageAndSize($paramsData){
+
+       $this->page = !empty($paramsData['page']) ? $paramsData['page']: 1;
+       $this->size = !empty($paramsData['size']) ? $paramsData['size']: config('paginate.list_rows');
     }
 }
