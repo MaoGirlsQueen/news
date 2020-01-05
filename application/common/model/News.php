@@ -20,18 +20,18 @@ class News extends BaseModel
     }
 
     //获取指定的页数和大小
-    public function getNewsByCondition($pageData=[]){
+    public function getNewsByCondition($condition=[],$from=0,$size=5){
         $condition['status']= [
             'neq',config('code.status_delete')
         ];
         $order = ['id'=>'desc'];
-        $from = ($pageData['page'] - 1)*$pageData['size'];
 
-        $result = $this->where($condition)->limit($from,$pageData['size'])->order($order)->select();
+
+        $result = $this->where($condition)->limit($from,$size)->order($order)->select();
         return $result;
     }
     //获取总数据
-    public function  getNewsCountByCondition($params=[]){
+    public function  getNewsCountByCondition($condition=[]){
         $condition['status']= [
             'neq',config('code.status_delete')
         ];
