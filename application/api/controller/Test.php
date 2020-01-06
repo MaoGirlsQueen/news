@@ -20,6 +20,6 @@ class Test extends Common
        if($data['gg'] != 1){
        throw new ApiException('提交的参数不合法o',403);
        }
-       return  show(1,"ok",input('post.'),200);
+       return  show(config('code.app_show_success'),"ok",input('post.'),200);
    }
 }

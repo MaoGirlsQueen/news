@@ -9,6 +9,7 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 use think\Route;
-Route::get("test","api/test/index");
-Route::put('test/:id','api/test/update');
-Route::resource('test','api/test');
+Route::get("test","api/v1.Test/index");
+Route::put('test/:id','api/v1.Test/update');
+Route::resource('test','api/v1.Test');
+Route::get("api/:version/cat",'api/:version.Cat/read');

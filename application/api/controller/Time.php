@@ -9,7 +9,7 @@ use think\Controller;
 class Time extends Controller
 {
     public function index(){
-        return show(1,'ok',time());
+        return show(config('code.app_show_success'),'ok',time());
     }
 
 }
