@@ -6,6 +6,8 @@ namespace app\common\model;
 
 class News extends BaseModel
 {
+
+
       //获取信息内容分页
     public function getNews($data=[]){
         $data['status']= [
@@ -36,5 +38,41 @@ class News extends BaseModel
             'neq',config('code.status_delete')
         ];
         return $this->where($condition)->count();
+    }
+
+    /***
+       获取首页头图的数据
+     **/
+    public function getIndexHeadNormalNews($num =5){
+       $data = [
+           'status'=>1,
+           'is_head_figure'=>1
+       ];
+       $order = [
+           'id'=>'desc'
+       ];
+       return $this->where($data)->field($this->_getField())->order($order)->limit($num)->select();
+    }
+
+    /****
+       获取推荐列表
+     **/
+    public function getPositionNormalNews($num =5){
+        $data = [
+            'status'=>1,
+            'is_position'=>1
+        ];
+        $order = [
+            'id'=>'desc'
+        ];
+        return $this->where($data)->field($this->_getField())->order($order)->limit($num)->select();
+    }
+
+    /***
+      通用化字段处理
+     **/
+
+    private function _getField(){
+        return ['id','title','image','read_count',"catid",'small_title'];
     }
 }

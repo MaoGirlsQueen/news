@@ -61,4 +61,18 @@ class Common extends Controller
 //        $__s = IAuth::getSign($data );
       echo $signData;exit;
     }
+
+    /***
+    对新闻栏目进行转换
+     **/
+    public function getNews($news = []){
+        if(empty($news)){
+            return null;
+        }
+        $cats = config('cat.lists');
+        foreach ($news as $key => $new){
+            $news[$key]['catname'] = $cats[$new['catid']] ? $cats[$new['catid']]:'-';
+        }
+        return $news;
+    }
 }
