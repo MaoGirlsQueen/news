@@ -16,6 +16,9 @@ class Common extends Controller
 {
 
     public $header = '';
+    public $page = 1;
+    public $size =10;
+    public  $from = 0;
     public function _initialize()
     {
       $this->checkRequestAuth();
@@ -75,4 +78,15 @@ class Common extends Controller
         }
         return $news;
     }
+
+    /**
+    获取分页的内容和size
+     **/
+    public function getPageAndSize($paramsData){
+
+        $this->page = !empty($paramsData['page']) ? $paramsData['page']: 1;
+        $this->size = !empty($paramsData['size']) ? $paramsData['size']: config('paginate.list_rows');
+        $this->from = ($this->page - 1)*$this->size;
+    }
+
 }
