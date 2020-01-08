@@ -16,3 +16,4 @@ Route::get("api/:version/cat",'api/:version.Cat/read');
 Route::get("api/:version/index",'api/:version.Index/index');
 Route::resource("api/:version/news",'api/:version.News');
 Route::get("api/:version/rank",'api/:version.Rank/index');
+Route::resource("api/:version/identify",'api/:version.Identify');
