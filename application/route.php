@@ -11,9 +11,11 @@
 use think\Route;
 Route::get("test","api/v1.Test/index");
 Route::put('test/:id','api/v1.Test/update');
-Route::resource('test','api/v1.Test');
+Route::resource('test','api/Test');
 Route::get("api/:version/cat",'api/:version.Cat/read');
 Route::get("api/:version/index",'api/:version.Index/index');
 Route::resource("api/:version/news",'api/:version.News');
 Route::get("api/:version/rank",'api/:version.Rank/index');
 Route::resource("api/:version/identify",'api/:version.Identify');
+Route::post("api/:version/login",'api/:version.Login/save');
+Route::post("api/:version/user",'api/:version.User/save');

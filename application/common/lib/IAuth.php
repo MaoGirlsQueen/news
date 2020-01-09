@@ -50,15 +50,26 @@ class IAuth
          if(!is_array($arr) || empty($arr['did']) || $arr['did']!=$data['did']){
              return false;
          }
-         if(!config("app_debug")){
-             if(($data['time'] - (ceil($arr['time']))/1000)>config('app.app_sign_time')){
-                 return false;
-             }
-             if(Cache::get($data['sign'])){
-                 return false;
-             }
-         }
+//         if(!config("app_debug")){
+//             if(($data['time'] - (ceil($arr['time']))/1000)>config('app.app_sign_time')){
+//                 return false;
+//             }
+//             if(Cache::get($data['sign'])){
+//                 return false;
+//             }
+//         }
 
          return true;
      }
+
+     /***
+        设置登录的token 唯一性
+      **/
+
+     public static function setAppLoginToken($phone = ''){
+         $str = md5(uniqid(md5(microtime(true)),true));
+         $str = sha1($str.$phone);
+         return $str;
+     }
+
 }

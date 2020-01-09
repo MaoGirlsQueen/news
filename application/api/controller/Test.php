@@ -6,12 +6,14 @@ namespace app\api\controller;
 use ali\top\request\AlibabaAliqinFcSmsNumSendRequest;
 use ali\top\TopClient;
 use app\common\lib\exception\ApiException;
+use app\common\lib\IAuth;
 use think\Controller;
 
 class Test extends Common
 {
    public function index(){
-       echo "1";
+       $str = IAuth::setAppLoginToken();
+       halt($str);
    }
    public function update(){
        $data = input('put.');

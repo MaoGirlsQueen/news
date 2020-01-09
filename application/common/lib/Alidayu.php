@@ -74,7 +74,7 @@ class Alidayu
   /***
      根据手机号码查询验证码是否正常
    **/
-  public function checkSmsIndetify($phone=0){
+  public static function checkSmsIndetify($phone=0){
       if(!$phone){
           return false;
       }
