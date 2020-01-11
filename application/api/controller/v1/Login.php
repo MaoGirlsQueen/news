@@ -20,16 +20,18 @@ class Login extends Common
         if(empty($param['phone'])){
             return show(0,'手机号码不合法',[],403);
         }
-        if(empty($param['code'])){
-            return show(0,'验证码不合法',[],403);
+        if(empty($param['code']) && empty($param['password'])){
+            return show(0,'验证码或手机号码不合法',[],403);
         }
+        if(!empty($param['code'])){
 
-        // 获取发送验证码的code
+            // 获取发送验证码的code
 //        $code = Alidayu::checkSmsIndetify();
-        $code = "2563";
-        if($code !=$param['code']){
-            $param['code'] = (new Aes())->decrypt($param['code']);
-            return show(0,'验证码不存在',[],403);
+            $code = "2563";
+            if($code !=$param['code']){
+                $param['code'] = (new Aes())->decrypt($param['code']);
+                return show(0,'验证码不存在',[],403);
+            }
         }
 
         $token = IAuth::setAppLoginToken($param['phone']);
@@ -40,12 +42,23 @@ class Login extends Common
          $user = model("User")->get(['phone' => $param['phone']]);
          if($user && $user->status == 1){
              //更新
+             if(!empty($param['password'])){
+                 if(IAuth::setPassWord($param['password']) != $user->password){
+                     return show(0,'密码不正确',[],403);
+                 }
+             }
+
              $id = model("User")->save($data,['id'=>$user->id]);
          }else{
-             $data["username"]='我的圈-'.$param['phone'];
-             $data['status']=1;
-             $data['phone']=$param['phone'];
-             $id =  model("User")->add($data);
+             if(!empty($param['code'])){
+                 $data["username"]='我的圈-'.$param['phone'];
+                 $data['status']=1;
+                 $data['phone']=$param['phone'];
+                 $id =  model("User")->add($data);
+             }else{
+                 return show(0,'用户不存在',[],403);
+             }
+
          }
         //第一次登录 注册数据
 

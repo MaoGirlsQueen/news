@@ -7,6 +7,7 @@ namespace app\api\controller\v1;
 use app\api\controller\Common;
 use app\common\lib\Aes;
 use app\common\lib\exception\ApiException;
+use app\common\model\User;
 use think\Request;
 
 /****
@@ -21,8 +22,10 @@ class AuthBase extends Common
 
    public function __construct(Request $request = null)
    {
+
        parent::_initialize();
        $result = $this->isLogin();
+
        if(empty($result)){
            throw  new ApiException('您还没有登录',401);
        }
@@ -32,31 +35,30 @@ class AuthBase extends Common
    判断是否登陆
     **/
    public function isLogin(){
-     if(empty($this->header['access_user_token'])){
-         return false;
-     }
 
-     //对access_user_token 进行解密
-       $accessUserToken = (new Aes())->decrypt($this->header['access_user_token']);
-
-      if(empty($accessUserToken)){
-          return false;
-      }
-      //判断有没有||
-      if(!preg_match('||',$accessUserToken)){
-          return false;
-      }
-
-      list($token,$id)=explode('||',$accessUserToken);
-       $user = model('User')->get(['token'=>$token]);
-       if(!$user || $user->status !=1){
-           return true;
-       }
-       //  判断时间是否过期
-       if(time() > $user->time_out){
+       if(empty($this->header['access_user_token'])) {
            return false;
        }
-       halt($user);
+
+       $obj = new Aes();
+       $accessUserToken = $obj->decrypt($this->header['access_user_token']);
+       if(empty($accessUserToken)) {
+           return false;
+       }
+       if(!preg_match('/||/', $accessUserToken)) {
+           return false;
+       }
+       list($token, $id) = explode("||", $accessUserToken);
+       $user =User::get(['id' => 1]);
+
+       if(!$user || $user->status != 1) {
+           return false;
+       }
+       // 判定时间是否过期
+       if(time() > $user->time_out) {
+           return false;
+       }
+
        $this->user = $user;
        return true;
    }
